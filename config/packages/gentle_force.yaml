@@ -1,0 +1,14 @@
+maba_gentle_force:
+  redis:
+    host: localhost
+    parameters:
+    failure_strategy: fail
+  limits:
+    send_message:
+      - max_usages: 1
+        period: 15s
+  listeners:
+    - path: ^/
+      methods: [POST]
+      limits_key: send_message
+      identifiers: [username]

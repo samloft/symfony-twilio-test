@@ -1,3 +1,14 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+  path: /
+  methods: [GET, POST]
+  controller: App\Controller\HomeController::index
+
+messages:
+  path: /messages
+  methods: GET
+  controller: App\Controller\MessagesController::index
+
+messages_webhook:
+  path: /messages/webhook/{id}
+  methods: POST
+  controller: App\Controller\MessagesController::webhook
