@@ -8,8 +8,6 @@ use App\Producer\SmsProducer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twilio\Exceptions\TwilioException;
-use Twilio\Rest\Client;
 
 class HomeController extends AbstractController
 {
