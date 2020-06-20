@@ -41,7 +41,7 @@ class SmsConsumer implements ConsumerInterface
                 $response = $client->messages->create($sms_message->getMobileNumber(), [
                     'from' => $this->params->get('TWILIO_NUMBER'),
                     'body' => $sms_message->getMessage(),
-                    'statusCallback' => $this->params->get('TWILIO_CALLBACK').$sms_message->getId(),
+                    'statusCallback' => $this->params->get('TWILIO_CALLBACK').'/messages/webhook/'.$sms_message->getId(),
                 ]);
 
                 $this->updateStatus($sms_message, $response->status);
