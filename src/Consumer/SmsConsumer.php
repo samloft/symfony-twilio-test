@@ -28,6 +28,11 @@ class SmsConsumer implements ConsumerInterface
         $this->params = $params;
     }
 
+    /**
+     * @param \PhpAmqpLib\Message\AMQPMessage $msg
+     *
+     * @return mixed|void
+     */
     public function execute(AMQPMessage $msg)
     {
         $id = json_decode($msg->body, true)['id'] ?? null;

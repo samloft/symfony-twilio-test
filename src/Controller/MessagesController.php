@@ -13,11 +13,31 @@ class MessagesController extends AbstractController
      */
     public function index(): Response
     {
+        return $this->render('messages/index.html.twig');
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function show(): JsonResponse
+    {
         $messages = $this->getDoctrine()->getRepository('App:Message')->show();
 
-        return $this->render('messages/index.html.twig', [
-            'messages' => $messages,
-        ]);
+        $data = [];
+
+        foreach ($messages as $message) {
+            $data[] = [
+                'id' => $message->getId(),
+                'name' => $message->getUser()->getName(),
+                'number' => $message->getMobileNumber(),
+                'message' => $message->getMessage(),
+                'status' => $message->getStatus(),
+                'created' => $message->getCreatedAt(),
+                'updated' => $message->getUpdatedAt(),
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 
     /**

@@ -4,67 +4,73 @@
 
 {% block content %}
 
-    <div class="flex flex-col">
-        <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 bg-white">
-                {% if messages %}
-                    <table class="min-w-full">
-                        <thead>
-                        <tr>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Sent By
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Sent To
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                Status
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"> </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for message in messages %}
-                            <tr class="bg-white">
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    {{ message.getUser().getName() }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    {{ message.getMobileNumber() }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    {% if message.getStatus() == 'queued' %}
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 uppercase">
-                                            {{ message.getStatus() }}
-                                        </span>
-                                    {% elseif message.getStatus() == 'delivered' %}
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 uppercase">
-                                            {{ message.getStatus() }}
-                                        </span>
-                                    {% elseif message.getStatus() == 'failed' %}
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 uppercase">
-                                            {{ message.getStatus() }}
-                                        </span>
-                                    {% else %}
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 uppercase">
-                                            {{ message.getStatus() }}
-                                        </span>
-                                    {% endif %}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                                        View
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                {% else %}
-                    <h3 class="text-center text-lg font-semibold p-6">No messages have been sent....</h3>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+    <div id="messages"></div>
 
+{#    <div id="app" class="flex flex-col">#}
+{#        <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 lg:-mx-8">#}
+{#            <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 bg-white">#}
+{#                {% if messages %}#}
+{#                    <table class="min-w-full">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">#}
+{#                                Sent By#}
+{#                            </th>#}
+{#                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">#}
+{#                                Sent To#}
+{#                            </th>#}
+{#                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">#}
+{#                                Status#}
+{#                            </th>#}
+{#                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        {% for message in messages %}#}
+{#                            <tr class="bg-white">#}
+{#                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">#}
+{#                                    {{ message.getUser().getName() }}#}
+{#                                </td>#}
+{#                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">#}
+{#                                    {{ message.getMobileNumber() }}#}
+{#                                </td>#}
+{#                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">#}
+{#                                    {% if message.getStatus() == 'queued' %}#}
+{#                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 uppercase">#}
+{#                                            {{ message.getStatus() }}#}
+{#                                        </span>#}
+{#                                    {% elseif message.getStatus() == 'delivered' %}#}
+{#                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 uppercase">#}
+{#                                            {{ message.getStatus() }}#}
+{#                                        </span>#}
+{#                                    {% elseif message.getStatus() == 'failed' %}#}
+{#                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 uppercase">#}
+{#                                            {{ message.getStatus() }}#}
+{#                                        </span>#}
+{#                                    {% else %}#}
+{#                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 uppercase">#}
+{#                                            {{ message.getStatus() }}#}
+{#                                        </span>#}
+{#                                    {% endif %}#}
+{#                                </td>#}
+{#                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">#}
+{#                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">#}
+{#                                        View#}
+{#                                    </a>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                {% else %}#}
+{#                    <h3 class="text-center text-lg font-semibold p-6">No messages have been sent....</h3>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
